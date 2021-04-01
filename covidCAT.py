@@ -56,6 +56,7 @@ def calc_df_covid(df_covid):
     """
     # Ordenem d'antic a més nou perquè faci els càlculs correctes
     df_covid=df_covid.loc[::-1].reset_index(drop=True)
+    
     # Eliminem asterisc a Data, convertim la resta de variables a enters (eliminant el punt),
     # excepte % PCR/TA Positives que la passem a real (substituim coma per punt).
     df_covid['Data'] = df_covid['Data'].str.replace('\*', '')

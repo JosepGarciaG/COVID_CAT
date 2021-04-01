@@ -10,9 +10,9 @@ El programa està format per 1 arxiu:
 
 ## Com executar el codi
 
-S'ha d'executar el següent codi:
+S'ha d'executar el següent codi desde terminal posicionant-nos a la carpeta on estigui l'arxiu:
 
 ```
-python3 covidCAT.py
+covidCAT.py
 ```
 

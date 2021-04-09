@@ -16,3 +16,10 @@ S'ha d'executar el següent codi desde terminal posicionant-nos a la carpeta on 
 covidCAT.py
 ```
 
+### Versió Jupyter Notebook
+
+Si volem executar el script des de Jupyter el podem trobar al següent arxiu:
+
+```
+covidCAT_per_parts.py
+```

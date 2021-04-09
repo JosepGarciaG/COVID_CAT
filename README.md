@@ -21,5 +21,5 @@ covidCAT.py
 Si volem executar el script des de Jupyter el podem trobar al següent arxiu:
 
 ```
-covidCAT_per_parts.py
+covidCAT_per_parts.ipynb
 ```

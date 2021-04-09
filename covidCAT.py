@@ -2,6 +2,9 @@ from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+import datetime as dt
+
 
 html = requests.get('https://dadescovid.cat/diari')
 soup = BeautifulSoup(html.text, 'html.parser')
@@ -95,6 +98,8 @@ def calc_df_covid(df_covid):
     df_covid['Canvi_7D_%'] = round(df_covid['Canvi_7D_%'].astype('float64'), 2)
     # Creació fitxer csv
     df_covid.to_csv("evolucio_covid_a_catalunya.csv", index=False)
+    # Canviem el format de la variable 'Data' a data
+    df_covid['Data'] = [dt.datetime.strptime(d, '%d/%m/%Y').date() for d in df_covid['Data']]
 
     return df_covid
 
@@ -111,15 +116,19 @@ def plot_covid_casos(df_covid):
     Args:
         df_covid (:obj:`dataframe`): Dades del COVID a Catalunya
     """
-    df_covid['MA_30'].plot(kind="bar", color=['blue'])  # Mitja últims 30 dies
-    df_covid['MA_7'].plot(kind="bar", color=['green'])  # Mitja últims 7 dies
-    df_covid['Casos confirmats per PCR/TA'].plot(kind="bar", color=['red'])  # Casos diaris
-    plt.rcParams["figure.figsize"] = [40, 24]
-    plt.xlabel('Dies')
-    plt.ylabel('Nombre de casos confirmats per PCR/TA')
-    plt.title('Evolució COVID a Catalunya')
-    plt.legend(loc='upper left')
+    plt.figure(figsize=(20, 10))
+    plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%d/%m/%Y'))
+    plt.gca().xaxis.set_major_locator(mdates.DayLocator(interval=15))
+    plt.plot(df_covid['Data'], df_covid['MA_30'], color='b')
+    plt.plot(df_covid['Data'], df_covid['MA_7'], color='g')
+    plt.bar(df_covid['Data'], df_covid['Casos confirmats per PCR/TA'], color='r')
+    plt.xlabel('Dies', fontsize=20)
+    plt.ylabel('Nombre de casos confirmats per PCR/TA', fontsize=20)
+    plt.title('Evolució COVID a Catalunya', fontsize=30)
+    plt.legend(labels=['Mitjana 30 dies', 'Mitjana 7 dies', 'Casos confirmats per PCR/TA'], loc='upper left',
+               fontsize=20)
     plt.savefig('Evolucio_COVID_CAT_PCR.png')
+    plt.gcf().autofmt_xdate()
     plt.show()
 
 
